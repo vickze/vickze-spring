@@ -1,0 +1,85 @@
+spring:
+  application:
+    name: vickze-gateway
+  #使用alibaba nacos注册中心
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NOCOS_ADDR:127.0.0.1:8848}
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowCredentials: true
+            allowedOrigins:
+            - "*"
+            allowedMethods:
+            - OPTION
+            - GET
+            - POST
+            - PUT
+            - DELETE
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: vickze-mvc-demo
+          uri: lb://VICKZE-MVC-DEMO
+          order: 0
+          predicates:
+            - Path=/mvc-demo/**
+          filters:
+            - AddRequestHeader=X-Forwarded-Prefix, /mvc-demo  #swagger XForwardPrefixPathAdjuster.java
+            - AddResponseHeader=Access-Control-Allow-Origin, *
+            - AddResponseHeader=X-Response-Foo, Bar
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@ipAddressKeyResolver}'
+                redis-rate-limiter.replenishRate: 5 #每秒执行多少请求，而不需要删除任何请求。这是令牌桶被填充的速率。
+                redis-rate-limiter.burstCapacity: 3 #每秒钟最大请求数
+
+        - id: vickze-webflux-demo
+          uri: lb://vickze-webflux-demo #lb://VICKZE-WEBFLUX-DEMO 注册中心为eureka时为大写
+          order: 0
+          predicates:
+            - Path=/webflux-demo/**
+          filters:
+            - AddRequestHeader=X-Forwarded-Prefix, /webflux-demo  #swagger XForwardPrefixPathAdjuster.java
+            - AddResponseHeader=Access-Control-Allow-Origin, *
+            - AddResponseHeader=X-Response-Foo, Bar
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{@ipAddressKeyResolver}'
+                redis-rate-limiter.replenishRate: 5 #每秒执行多少请求，而不需要删除任何请求。这是令牌桶被填充的速率。
+                redis-rate-limiter.burstCapacity: 3 #每秒钟最大请求数
+
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    database: ${REDIS_DB:0}
+  # -------
+server:
+  port: 8765
+
+#eureka:
+#    instance:
+#        prefer-ip-address: true
+#    client:
+#        serviceUrl:
+#            defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+
+# 配置swagger
+swagger:
+  enabled: true

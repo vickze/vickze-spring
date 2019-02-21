@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: vickze-sba
+
+server:
+    port: 8764 #启动端口
+
+eureka:
+    instance:
+        prefer-ip-address: true
+    client:
+        serviceUrl:
+            defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/

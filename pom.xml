@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.vickze</groupId>
+    <artifactId>vickze-spring</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>vickze-log</module>
+        <module>vickze-common</module>
+        <module>vickze-mvc-demo</module>
+        <module>vickze-eureka</module>
+        <module>vickze-gateway</module>
+        <module>vickze-sba</module>
+        <module>vickze-zuul</module>
+        <module>vickze-webflux-demo</module>
+    </modules>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <vickze-common.version>1.0-SNAPSHOT</vickze-common.version>
+        <vickze-log.version>1.0-SNAPSHOT</vickze-log.version>
+        <vickze-webflux-swagger.version>1.0-SNAPSHOT</vickze-webflux-swagger.version>
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+        <spring-boot-admin.version>2.0.1</spring-boot-admin.version>
+        <swagger.version>2.9.2</swagger.version>
+        <swagger-starter.version>1.7.1.RELEASE</swagger-starter.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.vickze</groupId>
+                <artifactId>vickze-common</artifactId>
+                <version>${vickze-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vickze</groupId>
+                <artifactId>vickze-log</artifactId>
+                <version>${vickze-log.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vickze</groupId>
+                <artifactId>vickze-webflux-swagger</artifactId>
+                <version>${vickze-webflux-swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>0.2.1.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <!-- swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

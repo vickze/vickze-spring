@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: vickze-mvc-demo
+  log:
+    enabled: true
+    enabled-request: true
+    enabled-response: true
+    request-ignore-context-type:
+      - multipart/form-data
+    response-accept-context-type:
+      - application/json;charset=UTF-8
+    ignore-url:
+      - /demo/error
+    custom:
+      name: demo
+
+server:
+  port: 14002
+
+eureka:
+    instance:
+        prefer-ip-address: true
+    client:
+        serviceUrl:
+            defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+logging:
+  config: classpath:logback-spring.xml
+  file: ./log/vickze-mvc-demo.log
+
+
+

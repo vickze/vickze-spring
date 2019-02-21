@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: vick-center
+
+server:
+    port: 8761 #启动端口
+
+eureka:
+  client:
+    register-with-eureka: false #false:不作为一个客户端注册到注册中心
+    fetch-registry: false

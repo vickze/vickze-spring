@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: vickze-zuul
+
+server:
+  port: 1111
+
+eureka:
+    instance:
+        prefer-ip-address: true
+    client:
+        serviceUrl:
+            defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+
+zuul:
+  routes:
+    mvc:
+      path: /mvc/demo/**
+      serviceId: vickze-mvc-demo
+    webflux:
+      path: /webflux/demo/**
+      serviceId: vickze-webflux-demo
+
+# 配置swagger
+swagger:
+    enabled: true
